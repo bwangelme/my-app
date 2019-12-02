@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { products } from '../products';
-import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../cart.service'
 
 @Component({
   selector: 'app-product-detail',
@@ -11,14 +12,20 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductDetailComponent implements OnInit {
   product;
 
-  constructor( private route: ActivatedRoute,) {
+  constructor( private route: ActivatedRoute, private cartService: CartService) {
 
   }
 
   ngOnInit() {
+    // TODO 这里是什么意思?
     this.route.paramMap.subscribe(params => {
       this.product = products[+params.get('productId')]
     })
+  }
+
+  addToCart(product) {
+    this.cartService.addToCart(product)
+    window.alert("商品已经成功加到了购物车")
   }
 
 }
